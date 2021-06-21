@@ -6,9 +6,10 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     [SerializeField] private float speed;
+    public float energy;
     void Start()
     {
-        
+
     }
 
     void Update()
