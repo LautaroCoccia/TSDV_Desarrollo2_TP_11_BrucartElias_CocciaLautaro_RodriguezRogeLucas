@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
@@ -7,10 +8,8 @@ public class ShipController : MonoBehaviour
     [SerializeField] private Transform shotSpawn;
     [SerializeField] private float fireRate;
     private float nextFire;
-    void Start()
-    {
-        
-    }
+
+    static public event Action instantiateBullet;
 
     void Update()
     {
@@ -22,7 +21,7 @@ public class ShipController : MonoBehaviour
         if (Input.GetKey(KeyCode.E) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(bullet, shotSpawn.position, Quaternion.identity);
+            instantiateBullet?.Invoke();
         }
     }
 }

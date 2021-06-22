@@ -3,9 +3,15 @@
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private int lives;
-    private bool canMove;
-    void Start()
+    [SerializeField] float speed;
+
+    private void Update()
     {
-        canMove = true;
+        MoveBullet();
+    }
+
+    void MoveBullet()
+    {
+        transform.position += Vector3.up * speed * Time.deltaTime;
     }
 }
