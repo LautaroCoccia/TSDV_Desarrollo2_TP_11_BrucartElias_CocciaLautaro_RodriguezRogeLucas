@@ -3,7 +3,7 @@
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private int lives;
-    [SerializeField] float speed;
+    [SerializeField] private float speed;
 
     private void Update()
     {
@@ -13,5 +13,11 @@ public class Bullet : MonoBehaviour
     void MoveBullet()
     {
         transform.position += Vector3.up * speed * Time.deltaTime;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "bulletLimit")
+            Destroy(gameObject);
     }
 }
