@@ -25,5 +25,4 @@ public class BombersMovementAround : MonoBehaviour
 
         transform.position = v3;
     }
-    
 }

@@ -19,5 +19,12 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "bulletLimit")
             Destroy(gameObject);
+
+        if(collision.gameObject.layer == 10)
+        {
+            ItemSpawner.spawnItem?.Invoke();
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
     }
 }

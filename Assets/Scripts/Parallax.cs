@@ -5,25 +5,31 @@ using UnityEngine;
 public class Parallax : MonoBehaviour
 {
     private float length, startpos;
-    private Camera cam;
     public float parallaxeffect;
+    float relativeTime = 0;
     void Start()
     {
-        cam = Camera.main;
-        startpos = transform.position.x;
-        length = GetComponentInChildren<SpriteRenderer>().bounds.size.x;
+        startpos = transform.position.y;
+        length = GetComponentInChildren<SpriteRenderer>().bounds.size.y;
     }
-
+    
+    private void Update()
+    {
+        relativeTime += Time.deltaTime;
+    }
     // Update is called once per frame
     void LateUpdate()
     {
-        float temp = (cam.transform.position.x * (1-parallaxeffect));
-        float dist = (cam.transform.position.x * parallaxeffect);
+        float temp = (relativeTime * (1-parallaxeffect));
+        float dist = (relativeTime * parallaxeffect);
 
-        transform.position = new Vector3(startpos + dist, transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, startpos - dist, transform.position.z);
 
-        if (temp > startpos + length)
-            startpos += length;
+        if (relativeTime > length/2)
+        {
+            startpos = 0;
+            relativeTime = 0;
+        }
         else if (temp < startpos - length)
             startpos -= length;
     }

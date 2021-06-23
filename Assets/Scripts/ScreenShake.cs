@@ -12,15 +12,8 @@ public class ScreenShake : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ShipController.shake += Shake;
         startPos = gameObject.transform.position;
-        BulletScaler.collisionAction += Shake;
-    }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Shake();
-        }
     }
     void Shake()
     {
@@ -41,6 +34,6 @@ public class ScreenShake : MonoBehaviour
     }
     private void OnDisable()
     {
-        BulletScaler.collisionAction -= Shake;
+        ShipController.shake -= Shake;
     }
 }

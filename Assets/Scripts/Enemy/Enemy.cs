@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System;
 public class Enemy : MonoBehaviour
 {
     public enum EnemyType
@@ -12,12 +12,11 @@ public class Enemy : MonoBehaviour
         GoingToTarget,
         GoBack
     }
-    [SerializeField] private int lives { get; set; }
     [SerializeField] private float speed;
     [SerializeField] private EnemyType type;
     [SerializeField] private GameObject ship;
-    [SerializeField] private GameObject firstPoint;
-    [SerializeField] private GameObject secondPoint;
+    [SerializeField] private Vector3 firstPoint;
+    [SerializeField] private Vector3 secondPoint;
     [SerializeField] private Vector3 offsetWithShip;
 
     private Rigidbody2D rb;
@@ -28,12 +27,10 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         state = EnemyState.GoingToTarget;
     }
-
     void Update()
     {
         Move();
     }
-
     void Move()
     {
         float distance;
@@ -41,15 +38,15 @@ public class Enemy : MonoBehaviour
         switch (state)
         {
             case EnemyState.GoingToTarget:
-                newPosition = Vector3.Lerp(transform.position, secondPoint.transform.position, speed * Time.deltaTime);
+                newPosition = Vector3.Lerp(transform.position, secondPoint, speed * Time.deltaTime);
                 transform.position = newPosition;
                 distance = Vector3.Distance(ship.transform.position, transform.position);
-                Debug.Log("distance " + distance);
+
                 if (distance >= 10.0f)
                     state = EnemyState.GoBack;
                 break;
             case EnemyState.GoBack:
-                newPosition = Vector3.Lerp(transform.position, firstPoint.transform.position, speed * Time.deltaTime);
+                newPosition = Vector3.Lerp(transform.position, firstPoint, speed * Time.deltaTime);
                 transform.position = newPosition;
                 distance = Vector3.Distance(ship.transform.position, transform.position);
                 if (distance >= 10.0f)
@@ -59,5 +56,4 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
-
 }
